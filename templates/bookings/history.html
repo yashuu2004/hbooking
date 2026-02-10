@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Bookings</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<h2 style="text-align:center;">My Booking History</h2>
+
+<div style="width:80%; margin:auto;">
+    {% if bookings %}
+        <table border="1" cellpadding="10" cellspacing="0" width="100%">
+            <tr>
+                <th>Route</th>
+                <th>Date</th>
+                <th>Seats</th>
+                <th>Total Price</th>
+                <th>Booked On</th>
+            </tr>
+
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.trip.source }} → {{ booking.trip.destination }}</td>
+                <td>{{ booking.trip.date }}</td>
+                <td>{{ booking.seats_booked }}</td>
+                <td>₹{{ booking.total_price }}</td>
+                <td>{{ booking.booking_date }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p style="text-align:center;">You have no bookings yet.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>

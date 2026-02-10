@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}Search Trips{% endblock %}
+
+{% block content %}
+
+<h2>Search Trips</h2>
+
+<form method="post">
+  {% csrf_token %}
+
+  <!-- FROM -->
+  <label>From State</label><br>
+  <select id="source_state" required>
+    <option value="">Select state</option>
+    {% for state in states %}
+      <option value="{{ state.id }}">{{ state.name }}</option>
+    {% endfor %}
+  </select><br><br>
+
+  <label>From City</label><br>
+  <select name="source" id="source_city" required>
+    <option value="">Select city</option>
+  </select><br><br>
+
+  <!-- TO -->
+  <label>To State</label><br>
+  <select id="destination_state" required>
+    <option value="">Select state</option>
+    {% for state in states %}
+      <option value="{{ state.id }}">{{ state.name }}</option>
+    {% endfor %}
+  </select><br><br>
+
+  <label>To City</label><br>
+  <select name="destination" id="destination_city" required>
+    <option value="">Select city</option>
+  </select><br><br>
+
+  <!-- DATE -->
+  <label>Date</label><br>
+  <input type="date" name="date" required><br><br>
+
+  <!-- TRANSPORT -->
+  <label>Transport</label><br>
+  <select name="transport_type">
+    <option value="BUS">Bus</option>
+    <option value="TRAIN">Train</option>
+    <option value="FLIGHT">Flight</option>
+  </select><br><br>
+
+  <button type="submit">Search</button>
+</form>
+
+<hr>
+{% if trips %}
+  <h2>Available Trips</h2>
+
+  {% for trip in trips %}
+    <div class="trip-card">
+      <div>
+        <h3>
+          {{ trip.source.name }} → {{ trip.destination.name }}
+        </h3>
+
+        <p>
+          {{ trip.date }} | {{ trip.time }} <br>
+          Transport: {{ trip.transport_type }} <br>
+          Seats Left: {{ trip.available_seats }}
+        </p>
+      </div>
+
+      <div>
+        <h3>₹{{ trip.price }}</h3>
+        <a href="/bookings/book/{{ trip.id }}/">
+          <button class="book-btn">Book Now</button>
+        </a>
+      </div>
+    </div>
+  {% endfor %}
+
+{% elif trips is not None %}
+  <p>No trips found</p>
+{% endif %}
+
+<!-- JS FOR DEPENDENT DROPDOWNS -->
+<script>
+function loadCities(stateSelectId, citySelectId) {
+  document.getElementById(stateSelectId).addEventListener("change", function () {
+    const stateId = this.value;
+    const citySelect = document.getElementById(citySelectId);
+
+    citySelect.innerHTML = '<option value="">Loading...</option>';
+
+    fetch(`/trips/cities/${stateId}/`)
+      .then(response => response.json())
+      .then(data => {
+        citySelect.innerHTML = '<option value="">Select city</option>';
+        data.forEach(city => {
+          citySelect.innerHTML += `<option value="${city.id}">${city.name}</option>`;
+        });
+      });
+  });
+}
+
+loadCities("source_state", "source_city");
+loadCities("destination_state", "destination_city");
+</script>
+<script>
+document.querySelector("form").addEventListener("submit", function (e) {
+    const fromCity = document.getElementById("source_city").value;
+    const toCity = document.getElementById("destination_city").value;
+
+    if (fromCity && toCity && fromCity === toCity) {
+        alert("Source and destination cannot be the same");
+        e.preventDefault();
+    }
+});
+</script>
+
+
+{% endblock %}

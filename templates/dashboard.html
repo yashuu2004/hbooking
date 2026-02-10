@@ -1,0 +1,18 @@
+<h2>Available Trips</h2>
+
+<ul>
+  {% for trip in trips %}
+    <li>
+      {{ trip.source }} → {{ trip.destination }}
+      | {{ trip.date }} | ₹{{ trip.price }}
+      | Seats: {{ trip.available_seats }}
+      {% if trip.available_seats > 0 %}
+        <a href="/bookings/book/{{ trip.id }}/">Book</a>
+      {% else %}
+        <span>Sold Out</span>
+      {% endif %}
+    </li>
+  {% empty %}
+    <li>No trips available</li>
+  {% endfor %}
+</ul>

@@ -1,0 +1,16 @@
+<h2>My Booking History</h2>
+
+<ul>
+  {% for booking in bookings %}
+    <li>
+      {{ booking.trip.source }} → {{ booking.trip.destination }}
+      | {{ booking.booking_date }}
+      | Seats: {{ booking.num_seats }}
+      | ₹{{ booking.total_price }}
+    </li>
+  {% empty %}
+    <li>No bookings found</li>
+  {% endfor %}
+</ul>
+
+<a href="/trips/">Back to Trips</a>

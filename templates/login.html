@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title> Login Form </title>
+
+  <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins&display=swap">
+
+  <!-- keep your css files exactly -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+
+<body>
+<div class="wrapper">
+  <div class="login_box">
+
+    <!-- ✅ FORM START (CRITICAL) -->
+    <form method="post">
+      {% csrf_token %}
+
+      <div class="login-header">
+        <span>Login</span>
+      </div>
+
+      <div class="input_box">
+        <!-- ✅ name added -->
+        <input type="text" id="user" name="username" class="input-field" placeholder=" " required>
+        <label for="user" class="label">Username</label>
+        <i class="bx bx-user icon"></i>
+      </div>
+
+      <div class="input_box">
+        <!-- ✅ name added -->
+        <input type="password" id="pass" name="password" class="input-field" placeholder=" " required>
+        <label for="pass" class="label">Password</label>
+        <i class="bx bx-lock-alt icon"></i>
+      </div>
+
+      <div class="remember-forgot">
+        <div class="remember-me">
+          <input type="checkbox" id="remember">
+          <label for="remember">Remember me</label>
+        </div>
+
+        <div class="forgot">
+          <a href="#">Forgot password?</a>
+        </div>
+      </div>
+
+      <div class="input_box">
+        <input type="submit" class="input-submit" value="Login">
+      </div>
+
+      <div class="register">
+        <!-- ✅ django register url -->
+        <span>Don't have an account?
+          <a href="/accounts/register/">Register</a>
+        </span>
+      </div>
+
+    </form>
+    <!-- ✅ FORM END -->
+
+  </div>
+</div>
+</body>
+</html>

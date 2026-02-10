@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Confirm Booking{% endblock %}
+
+{% block content %}
+<h2>Confirm Booking</h2>
+
+<div class="trip-card">
+  <div>
+    <h3>{{ trip.source.name }} → {{ trip.destination.name }}</h3>
+    <p>
+      {{ trip.date }} | {{ trip.time }} <br>
+      Transport: {{ trip.transport_type }} <br>
+      Available Seats: {{ trip.available_seats }} <br>
+      Price: ₹{{ trip.price }}
+    </p>
+  </div>
+</div>
+
+<form method="post">
+  {% csrf_token %}
+
+  <label>Seats</label><br>
+  <input type="number" name="seats" min="1" max="{{ trip.available_seats }}" value="1" required>
+  <br><br>
+
+  <button class="book-btn">Confirm Booking</button>
+</form>
+{% endblock %}

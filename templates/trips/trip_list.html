@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Available Trips</title>
+</head>
+<body>
+
+<h1>Available Trips</h1>
+
+{% if trips %}
+    <ul>
+        {% for trip in trips %}
+            <li>
+                {{ trip.source }} → {{ trip.destination }} |
+                {{ trip.date }} |
+                ₹{{ trip.price }} |
+                Seats: {{ trip.available_seats }}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No trips available</p>
+{% endif %}
+
+</body>
+</html>

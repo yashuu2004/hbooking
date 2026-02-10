@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h2 class="page-title">Available Trips</h2>
+
+<div class="trip-container">
+{% for trip in trips %}
+
+  {% if trip.price <= 500 %}
+  <div class="trip-card bus">
+    <div class="trip-header">🚍 Bus</div>
+
+  {% elif trip.price <= 2000 %}
+  <div class="trip-card train">
+    <div class="trip-header">🚆 Train</div>
+
+  {% else %}
+  <div class="trip-card flight">
+    <div class="trip-header">✈️ Flight</div>
+  {% endif %}
+
+    <h3>{{ trip.source }} → {{ trip.destination }}</h3>
+    <p class="date">{{ trip.date }}</p>
+    <p class="price">₹{{ trip.price }}</p>
+
+    <a href="/bookings/book/{{ trip.id }}/" class="book-btn">Book</a>
+  </div>
+
+{% endfor %}
+</div>
+{% endblock %}

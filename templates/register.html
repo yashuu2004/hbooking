@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins&display=swap">
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+
+<body>
+<div class="wrapper">
+  <div class="login_box">
+
+    <form method="post">
+      {% csrf_token %}
+
+      <div class="login-header">
+        <span>Register</span>
+      </div>
+
+      <!-- ✅ EMAIL (USERNAME) -->
+      <div class="input_box">
+        <input
+          type="email"
+          name="email"
+          class="input-field"
+          placeholder=" "
+          required
+        >
+        <label class="label">Email</label>
+        <i class="bx bx-envelope icon"></i>
+      </div>
+
+      <!-- PASSWORD -->
+      <div class="input_box">
+        <input
+          type="password"
+          name="password"
+          class="input-field"
+          placeholder=" "
+          required
+        >
+        <label class="label">Password</label>
+        <i class="bx bx-lock-alt icon"></i>
+      </div>
+
+      <div class="input_box">
+        <input type="submit" class="input-submit" value="Register">
+      </div>
+
+      <div class="register">
+        <span>Already have an account?
+          <a href="/accounts/login/">Login</a>
+        </span>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+</body>
+</html>
